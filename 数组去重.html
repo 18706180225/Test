@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        // 方法一：Set数据结构
+        // let arr = [12, 1, 12, 3, 1, 88, 66, 66, 88, 999];
+
+        // function unique(ary) {　　
+        //     let s = new Set(ary);
+        //     //Array.from:将set数据类型结构转成真正的数组；
+        //     return Array.from(s)
+        // }
+        // let newArr = unique(arr);
+        // console.log(newArr);
+
+        // ------------------------------------------------
+
+        // 方法二：indexOf
+        // let arr = [12, 1, 12, 3, 1, 88, 66, 66, 88, 999];
+        // let newArr = [];
+
+        // function unique(ary) {
+        //     for (let i = 0; i < arr.length; i++) {
+        //         let cur = arr[i];
+        //         if (newArr.indexOf(cur) === -1) {
+        //             newArr.push(cur);
+        //         }
+        //     }
+        // }
+        // unique(arr);
+        // console.log(newArr);
+
+        // -----------------------------------
+
+        // 方法三：includes
+        // let arr = [12, 1, 12, 3, 1, 88, 66, 66, 88, 999];
+        // let newArr = [];
+
+        // function unique(ary) {
+        //     for (let i = 0; i < arr.length; i++) {
+        //         let cur = arr[i];
+        //         if (!newArr.includes(cur)) {
+        //             newArr.push(cur);
+        //         }
+        //     }
+        // }
+        // unique(arr);
+        // console.log(newArr);
+
+        // ---------------------------------
+        // 方法四:sort
+        let arr = [12, 1, 12, 3, 1, 88, 66, 9, 66];
+
+        function unique(ary) {
+            // 先从小到大排序
+            let a = ary.sort(function(a, b) {
+                return a - b;
+            });
+            // 遍历排序后的数组，如果有相同的值，就删除
+            for (let i = 0; i < a.length; i++) {
+                if (a[i] === a[i + 1]) {
+                    a.splice(i + 1, 1);
+                    i--;
+                }
+            }
+            return a;
+        }
+        let newArr = unique(arr);
+        console.log(newArr);
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        .box {
+            position: relative;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id=""><br>
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id=""><br>
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+        <input type="checkbox" name="" id="">
+    </div>
+    <script>
+        //鼠标按下事件
+        document.onmousedown = function(e) {
+            //获取所有的复选框元素
+            let checkboxList = [];
+            let checkboxs = document.getElementsByTagName("input");
+            for (let i = 0; i < checkboxs.length; i++) {
+                checkboxList.push(checkboxs[i]);
+            }
+            //定义一个标识符来标识鼠标是否被按下
+            let flag = true;
+
+            //获取事件对象
+            let event = e || window.event;
+            //获取鼠标点击的初始位置
+            let startX = event.clientX;
+            let startY = event.clientY;
+
+            //创建一个选框元素，用来显示选中的内容
+            let selectDiv = document.createElement("div");
+            // 给元素添加css样式
+            selectDiv.style.cssText = "position:absolute; width:0px; height:0px; border:1px dashed #000; display:none";
+            document.body.appendChild(selectDiv);
+            // 确定选框的位置
+            selectDiv.style.left = startX + "px";
+            selectDiv.style.top = startY + "px";
+
+            // 鼠标移动事件
+            document.onmousemove = function(e) {
+                event = e || window.event;
+                if (flag) {
+                    if (selectDiv.style.display == "none") {
+                        selectDiv.style.display = "block";
+                    }
+                    // 鼠标移动的位置
+                    let nowX = event.clientX;
+                    let nowY = event.clientY;
+
+                    //确定选框的位置以及宽高
+                    selectDiv.style.left = Math.min(nowX, startX) + 'px';
+                    selectDiv.style.top = Math.min(nowY, startY) + 'px';
+                    selectDiv.style.width = Math.abs(nowX - startX) + 'px';
+                    selectDiv.style.height = Math.abs(nowY - startY) + 'px';
+
+                    //获取选框元素距离左侧、上侧的距离以及自身的宽高
+                    let selectLeft = selectDiv.offsetLeft;
+                    let selectTop = selectDiv.offsetTop;
+                    let selectWidth = selectDiv.offsetWidth;
+                    let selectHeight = selectDiv.offsetHeight;
+                    for (let i = 0; i < checkboxs.length; i++) {
+                        let checkW = checkboxs[i].offsetWidth + checkboxs[i].offsetLeft;
+                        let checkH = checkboxs[i].offsetHeight + checkboxs[i].offsetTop;
+
+                        //如果复选框在选框元素之内，则显示为被选中状态
+                        if (checkW > selectLeft && checkH > selectTop && checkboxs[i].offsetLeft < selectLeft + selectWidth && checkboxs[i].offsetTop < selectTop + selectHeight) {
+                            checkboxs[i].checked = true;
+                        }
+
+                    }
+                }
+                //阻止事件的默认行为
+                e.preventDefault();
+            }
+
+            // 鼠标释放事件
+            document.onmouseup = function() {
+                flag = false;
+                if (selectDiv) {
+                    //将选框元素删除
+                    document.body.removeChild(selectDiv);
+                }
+            }
+
+            // 重置复选框
+            checkboxList.forEach((item, index) => {
+                item.checked = false;
+            })
+        }
+    </script>
+</body>
+
+</html>

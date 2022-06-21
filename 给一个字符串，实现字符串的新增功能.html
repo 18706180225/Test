@@ -9,7 +9,15 @@
 </head>
 
 <body>
+    <script>
+        // 要求：给一个字符串 'abc', 打印出 'oabc'
 
+        var str1 = 'o';
+        String.prototype.addStr = function(s) {
+            return this + s;
+        }
+        console.log(str1.addStr('abc'));
+    </script>
 </body>
 
 </html>
